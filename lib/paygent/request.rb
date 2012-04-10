@@ -29,7 +29,9 @@ module Paygent
       {
         :connect_id => Paygent.default_id,
         :connect_password => Paygent.default_password,
-        :limit_count => Paygent.select_max_cnt
+        :limit_count => Paygent.select_max_cnt,
+        :telegram_kind => "010",
+        :telegram_version => "1.0"
       }.merge(_params || {})
     end
 
@@ -50,9 +52,25 @@ module Paygent
 
       # $header[] = HttpsRequestSender__CONTENT_TYPE;
       # $header[] = HttpsRequestSender__HTTP_ENCODING;
-      # $header[] = HttpsRequestSender__CONTENT_LENGTH . ": "
-      # . (StringUtil::isEmpty($query)? "0" : strlen($query));
       # $header[] = HttpsRequestSender__USER_AGENT . ": " . "curl_php";
+
+
+      $this->ch = curl_init($this->url);
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0 );
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_POST, true);
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_HEADER, true);
+
+      // 証明書
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, true);
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, false);
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSLCERT, $this->clientCertificatePath);
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSLKEYPASSWD, $this->KEYSTORE_PASSWORD);
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_CAINFO, $this->caCertificatePath);
+
+      // タイムアウト
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_TIMEOUT, $this->timeout);
+      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, $this->proxyConnectTimeout);
 
 
       response = rest_client.post(params)
