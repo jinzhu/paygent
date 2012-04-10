@@ -10,12 +10,9 @@ module Paygent
   Paygent.default_id       = ""
   Paygent.default_password = ""
   Paygent.timeout          = 0
-  Paygent.select_max_cnt   = 0
+  Paygent.select_max_cnt   = 2000
 
   def self.init
-    # Init Logger
+    Paygent::Request.new
   end
 end
-
-# w/ 3D code
-# w/o 3D code
