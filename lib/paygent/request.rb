@@ -1,8 +1,8 @@
-require 'rest_client'
+require 'curb'
 
 module Paygent
   class Request
-    attr_accessor :_params
+    attr_accessor :_params, :body_str, :header_str, :response_code
 
     def initialize
     end
@@ -36,62 +36,34 @@ module Paygent
     end
 
     def post
-      rest_client = RestClient::Resource.new(
-        "https://mdev.paygent.co.jp/n/card/request",
-        :ssl_client_cert  =>  OpenSSL::X509::Certificate.new(File.read(Paygent.client_file_path)),
-        :ssl_ca_file      =>  Paygent.ca_file_path,
-        :timeout          => Paygent.timeout
-      )
-
       # $this->replaceTelegramKana();
       # $this->validateTelegramLengthCheck();
-      #
-      # define("HttpsRequestSender__CONTENT_TYPE", "Content-Type=application/x-www-form-urlencoded");
-      # define("HttpsRequestSender__HTTP_ENCODING", "charset=Windows-31J");
-      # $header[] = HttpsRequestSender__USER_AGENT . ": " . "   curl_php";
 
-      # $header[] = HttpsRequestSender__CONTENT_TYPE;
-      # $header[] = HttpsRequestSender__HTTP_ENCODING;
-      # $header[] = HttpsRequestSender__USER_AGENT . ": " . "curl_php";
+      c = Curl::Easy.new("https://mdev.paygent.co.jp/n/card/request")
+      c.cacert          = Paygent.ca_file_path
+      c.cert            = Paygent.client_file_path
+      c.certpassword    = Paygent.cert_password
+      c.connect_timeout = Paygent.timeout
+      c.verbose         = true
+      c.ssl_verify_host = false
 
+      c.headers["Content-Type"] = "application/x-www-form-urlencoded"
+      c.headers["charset"] = "Windows-31J"
+      c.headers["User-Agent"] = "curl_ruby"
 
-      # $this->ch = curl_init($this->url);
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0 );
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_POST, true);
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_HEADER, true);
+      c.http_post
 
-      # // 証明書
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, true);
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, false);
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSLCERT, $this->clientCertificatePath);
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSLKEYPASSWD, $this->KEYSTORE_PASSWORD);
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_CAINFO, $this->caCertificatePath);
+      self.response_code = c.response_code
+      self.body_str      = c.body_str
+      self.header_str    = c.header_str
+    end
 
-      # // タイムアウト
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_TIMEOUT, $this->timeout);
-      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, $this->proxyConnectTimeout);
-
-
-      response = rest_client.post(params)
-      response.to_str
-
-      # Init Params
-
-      # Pre Post
-
-      # Error Check
-
-      # Post
-
-      # Get Body
+    def success?
+      response_code == 200
     end
 
     def result
+      self.body_str
     end
   end
 end
-
-# Pay without 3D
-# Pay with 3D
-# Cancel
