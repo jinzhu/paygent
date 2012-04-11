@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "paygent/version"
 
 Gem::Specification.new do |s|
   s.name        = "paygent"
-  s.version     = Paygent::VERSION
+  s.version     = "0.0.1"
   s.authors     = ["Jinzhu"]
   s.email       = ["wosmvp@gmail.com"]
   s.homepage    = ""
