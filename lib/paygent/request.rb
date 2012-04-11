@@ -2,7 +2,7 @@ require 'curb'
 
 module Paygent
   class Request
-    attr_accessor :_params, :body_str, :header_str, :response_code
+    attr_accessor :_params, :body_str, :header_str, :response_code, :request
 
     def initialize
     end
@@ -56,14 +56,11 @@ module Paygent
       self.response_code = c.response_code
       self.body_str      = c.body_str
       self.header_str    = c.header_str
+      self.request       = c
     end
 
     def success?
       response_code == 200
-    end
-
-    def result
-      self.body_str
     end
   end
 end
