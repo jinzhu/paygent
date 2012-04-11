@@ -1,7 +1,7 @@
 require 'rest_client'
 
 module Paygent
-  module Request
+  class Request
     attr_accessor :_params
 
     def initialize
@@ -55,22 +55,22 @@ module Paygent
       # $header[] = HttpsRequestSender__USER_AGENT . ": " . "curl_php";
 
 
-      $this->ch = curl_init($this->url);
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0 );
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_POST, true);
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_HEADER, true);
+      # $this->ch = curl_init($this->url);
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0 );
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_POST, true);
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_HEADER, true);
 
-      // 証明書
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, true);
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, false);
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSLCERT, $this->clientCertificatePath);
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSLKEYPASSWD, $this->KEYSTORE_PASSWORD);
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_CAINFO, $this->caCertificatePath);
+      # // 証明書
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, true);
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, false);
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSLCERT, $this->clientCertificatePath);
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_SSLKEYPASSWD, $this->KEYSTORE_PASSWORD);
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_CAINFO, $this->caCertificatePath);
 
-      // タイムアウト
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_TIMEOUT, $this->timeout);
-      $rslt = $rslt && curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, $this->proxyConnectTimeout);
+      # // タイムアウト
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_TIMEOUT, $this->timeout);
+      # $rslt = $rslt && curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, $this->proxyConnectTimeout);
 
 
       response = rest_client.post(params)

@@ -1,11 +1,11 @@
-require "paygent/version"
-
 module Paygent
-  attr_accessor :client_file_path, :ca_file_path, :log_output_path, :debug_flg, :default_id, :default_password, :timeout, :select_max_cnt
+  class << self
+    attr_accessor :client_file_path, :ca_file_path, :log_output_path, :debug_flg, :default_id, :default_password, :timeout, :select_max_cnt
+  end
 
   Paygent.client_file_path = ""
   Paygent.ca_file_path     = ""
-  Paygent.log_output_path  = File.join(Rails.root, 'log/paygent.log')
+  Paygent.log_output_path  = "log/paygent.log"
   Paygent.debug_flg        = 0
   Paygent.default_id       = ""
   Paygent.default_password = ""
@@ -16,3 +16,5 @@ module Paygent
     Paygent::Request.new
   end
 end
+
+require "paygent/request"
