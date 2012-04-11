@@ -64,5 +64,13 @@ module Paygent
     def success?
       response_code == 200
     end
+
+    def body_hash
+      body_str.split("\r\n").inject({}) do |s, str|
+        items = str.split("=", 2)
+        s.update(items[0] => items[1]) if items.size == 2
+        s
+      end
+    end
   end
 end
