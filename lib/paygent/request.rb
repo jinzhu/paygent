@@ -38,7 +38,7 @@ module Paygent
     def post
       rest_client = RestClient::Resource.new(
         "https://mdev.paygent.co.jp/n/card/request",
-        :ssl_client_cert  =>  OpenSSL::X509::Certificate.new(Paygent.client_file_path),
+        :ssl_client_cert  =>  OpenSSL::X509::Certificate.new(File.read(Paygent.client_file_path)),
         :ssl_ca_file      =>  Paygent.ca_file_path,
         :timeout          => Paygent.timeout
       )
