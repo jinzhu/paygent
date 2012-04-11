@@ -1,4 +1,5 @@
 require 'curb'
+require 'iconv'
 
 module Paygent
   class Request
@@ -54,9 +55,10 @@ module Paygent
       c.http_post
 
       self.response_code = c.response_code
-      self.body_str      = c.body_str
+      self.body_str      = Iconv.conv('utf-8','Windows-31J', c.body_str)
       self.header_str    = c.header_str
       self.request       = c
+      self
     end
 
     def success?
