@@ -28,11 +28,11 @@ module Paygent
 
     def params
       {
+        :merchant_id => Paygent.merchant_id,
         :connect_id => Paygent.default_id,
         :connect_password => Paygent.default_password,
         :limit_count => Paygent.select_max_cnt,
-        :telegram_kind => "010",
-        :telegram_version => "1.0"
+        :telegram_version => Paygent.telegram_version,
       }.merge(_params || {})
     end
 
