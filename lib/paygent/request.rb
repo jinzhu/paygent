@@ -5,7 +5,9 @@ module Paygent
   class Request
     attr_accessor :_params, :body_str, :header_str, :response_code, :request
 
-    def initialize
+    def initialize(option={})
+      self._params ||= {}
+      self._params.update(option)
     end
 
     def valid?
@@ -18,7 +20,7 @@ module Paygent
     end
 
     def reqPut(key, value)
-      _params ||= []
+      _params ||= {}
       _params[key.to_sym] = value
     end
 
@@ -47,12 +49,15 @@ module Paygent
       c.connect_timeout = Paygent.timeout
       c.verbose         = true
       c.ssl_verify_host = false
+      c.multipart_form_post = true
 
       c.headers["Content-Type"] = "application/x-www-form-urlencoded"
       c.headers["charset"] = "Windows-31J"
       c.headers["User-Agent"] = "curl_ruby"
 
-      c.http_post
+      c.post_body = params.map{|f,k| "#{c.escape(f)}=#{c.escape(k)}"}.join('&')
+
+      c.http_post()
 
       self.response_code = c.response_code
       self.body_str      = Iconv.conv('utf-8','Windows-31J', c.body_str)

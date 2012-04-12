@@ -17,8 +17,8 @@ module Paygent
   Paygent.timeout          = 2000
   Paygent.select_max_cnt   = 2000
 
-  def self.init
-    Paygent::Request.new
+  def self.init(option={})
+    Paygent::Request.new(option)
   end
 end
 
