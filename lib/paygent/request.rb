@@ -38,11 +38,15 @@ module Paygent
       }.merge(_params || {})
     end
 
+    def params_str
+      params.map{|f,k| "#{Curl::Easy.new.escape(f)}=#{Curl::Easy.new.escape(k)}"}.join('&')
+    end
+
     def post
       # $this->replaceTelegramKana();
       # $this->validateTelegramLengthCheck();
 
-      c = Curl::Easy.new("https://mdev.paygent.co.jp/n/card/request")
+      c = Curl::Easy.new("https://mdev.paygent.co.jp/n/card/request?" + params_str)
       c.cacert          = Paygent.ca_file_path
       c.cert            = Paygent.client_file_path
       c.certpassword    = Paygent.cert_password
@@ -53,9 +57,7 @@ module Paygent
 
       c.headers["Content-Type"] = "application/x-www-form-urlencoded"
       c.headers["charset"] = "Windows-31J"
-      c.headers["User-Agent"] = "curl_ruby"
-
-      c.post_body = params.map{|f,k| "#{c.escape(f)}=#{c.escape(k)}"}.join('&')
+      c.headers["User-Agent"] = "curl_php"
 
       c.http_post()
 
