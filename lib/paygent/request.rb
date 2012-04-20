@@ -73,11 +73,9 @@ module Paygent
     end
 
     def body_hash
-      body_str.split("\r\n").inject({}) do |s, str|
-        items = str.split("=", 2)
-        s.update(items[0] => items[1]) if items.size == 2
-        s
-      end
+      hash = {}
+      body_str.scan(/\r\n(\w+)=(<!DOCTYPE.*?<\/HTML>|.*?)\r\n/m) { hash.update($1 => $2) }
+      hash.with_indifferent_access
     end
   end
 end
