@@ -46,7 +46,8 @@ module Paygent
       # $this->replaceTelegramKana();
       # $this->validateTelegramLengthCheck();
 
-      c = Curl::Easy.new("https://mdev.paygent.co.jp/n/card/request?" + params_str)
+      url = "https://mdev.paygent.co.jp/n/card/request?" + params_str
+      c = Curl::Easy.new(url)
       c.cacert          = Paygent.ca_file_path
       c.cert            = Paygent.client_file_path
       c.certpassword    = Paygent.cert_password
@@ -65,7 +66,21 @@ module Paygent
       self.body_str      = Iconv.conv('utf-8','Windows-31J', c.body_str)
       self.header_str    = c.header_str
       self.request       = c
+
+      process_id = (rand * 100000000).to_i
+      log("\n\n[#{process_id}] URL: #{url}")
+      log("[#{process_id}] BODY: #{body_str}")
+      log("[#{process_id}] HEAD: #{header_str}")
+
       self
+    end
+
+    def log(str)
+      if File.exist?(Paygent.log_output_path)
+        File.open(Paygent.log_output_path, "a") do |file|
+          file.puts str
+        end
+      end
     end
 
     def success_response?
