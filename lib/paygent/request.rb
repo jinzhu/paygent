@@ -84,7 +84,7 @@ module Paygent
     end
 
     def success_response?
-      response_code == 200
+      response_code.to_i == 200
     end
 
     def success_processed?
