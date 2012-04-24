@@ -88,7 +88,7 @@ module Paygent
     end
 
     def success_processed?
-      body_hash[:result].to_i == 0
+      body_hash[:result].to_i != 1
     end
 
     def body_hash
