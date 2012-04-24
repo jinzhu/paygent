@@ -9,6 +9,7 @@ module Paygent
       self._params ||= {}
       self._params.update(option)
       self.process_id = (rand * 100000000).to_i
+      self
     end
 
     def valid?
@@ -68,13 +69,12 @@ module Paygent
       self.header_str    = c.header_str
       self.request       = c
 
-    ensure
       log("URL: #{url}")
       log("ResponseCode: #{response_code}")
       log("BODY: #{body_str}")
       log("HEAD: #{header_str}\n\n")
 
-      self
+      return self
     end
 
     def log(str)
