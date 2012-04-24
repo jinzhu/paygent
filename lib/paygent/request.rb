@@ -3,11 +3,12 @@ require 'iconv'
 
 module Paygent
   class Request
-    attr_accessor :_params, :body_str, :header_str, :response_code, :request
+    attr_accessor :_params, :body_str, :header_str, :response_code, :request, :process_id
 
     def initialize(option={})
       self._params ||= {}
       self._params.update(option)
+      self.process_id = (rand * 100000000).to_i
     end
 
     def valid?
@@ -67,10 +68,9 @@ module Paygent
       self.header_str    = c.header_str
       self.request       = c
 
-      process_id = (rand * 100000000).to_i
-      log("\n\n[#{process_id}] URL: #{url}")
-      log("[#{process_id}] BODY: #{body_str}")
-      log("[#{process_id}] HEAD: #{header_str}")
+      log("URL: #{url}")
+      log("BODY: #{body_str}")
+      log("HEAD: #{header_str}\n\n")
 
       self
     end
@@ -78,7 +78,7 @@ module Paygent
     def log(str)
       if File.exist?(Paygent.log_output_path)
         File.open(Paygent.log_output_path, "a") do |file|
-          file.puts str
+          file.puts "[#{process_id}] #{str}"
         end
       end
     end
