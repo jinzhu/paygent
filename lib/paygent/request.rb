@@ -68,7 +68,9 @@ module Paygent
       self.header_str    = c.header_str
       self.request       = c
 
+    ensure
       log("URL: #{url}")
+      log("ResponseCode: #{response_code}")
       log("BODY: #{body_str}")
       log("HEAD: #{header_str}\n\n")
 
@@ -93,7 +95,7 @@ module Paygent
 
     def body_hash
       hash = {}
-      body_str.scan(/\r\n(\w+)=(<!DOCTYPE.*?<\/HTML>|.*?)\r\n/m) { hash.update($1 => $2) }
+      body_str.scan(/\n(\w+)=(<!DOCTYPE.*?<\/HTML>|.*?)\r/m) { hash.update($1 => $2) }
       hash.with_indifferent_access
     end
   end
