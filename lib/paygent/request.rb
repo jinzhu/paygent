@@ -78,7 +78,7 @@ module Paygent
     def log(str)
       if File.exist?(Paygent.log_output_path)
         File.open(Paygent.log_output_path, "a") do |file|
-          file.puts "[#{process_id}] #{str}"
+          file.puts "[#{process_id}][#{params[:trading_id]}] #{str}"
         end
       end
     end
