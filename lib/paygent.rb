@@ -23,3 +23,4 @@ module Paygent
 end
 
 require "paygent/request"
+require "paygent/service"

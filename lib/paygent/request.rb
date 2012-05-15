@@ -45,10 +45,11 @@ module Paygent
     end
 
     def post
-      # $this->replaceTelegramKana();
-      # $this->validateTelegramLengthCheck();
+      telegram_kind = params[:telegram_kind]
+      base_url = Paygent::Service.get_url_with_telegram_kind(params[:telegram_kind])
+      log("Can't found related paygent URL with #{telegram_kind}") unless base_url
 
-      url = "https://mdev.paygent.co.jp/n/card/request?" + params_str
+      url = "#{base_url}?#{params_str}"
       c = Curl::Easy.new(url)
       c.cacert          = Paygent.ca_file_path
       c.cert            = Paygent.client_file_path
