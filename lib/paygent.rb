@@ -20,6 +20,10 @@ module Paygent
   def self.init(option={})
     Paygent::Request.new(option)
   end
+
+  def self.set_url(kind, url)
+    Paygent::Service.set_url(kind, url)
+  end
 end
 
 require "paygent/request"
