@@ -5,7 +5,7 @@ module Paygent
     ###ATM決済URL###
     @@url["01"] ||= "https://mdev.paygent.co.jp/n/atm/request"
     ###クレジットカード決済URL1###
-    @@url["02"] ||= "https://mdev.paygent.co.jp/n/atm/request"
+    @@url["02"] ||= "https://mdev.paygent.co.jp/n/card/request"
     ###クレジットカード決済URL2###
     @@url["11"] ||= "https://mdev.paygent.co.jp/n/card/request"
     ###コンビニ番号方式決済URL###
