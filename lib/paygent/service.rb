@@ -42,7 +42,7 @@ module Paygent
     def self.get_url_with_telegram_kind(kind)
       kind_str = kind.to_s
       return @@url[kind_str] if @@url[kind_str]
-      kind_str.sub!(/\w$/,'')
+      kind_str = kind_str.sub(/\w$/,'')
       return @@url[kind_str] if @@url[kind_str]
       return false
     end

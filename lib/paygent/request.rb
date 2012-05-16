@@ -46,7 +46,7 @@ module Paygent
 
     def post
       telegram_kind = params[:telegram_kind]
-      base_url = Paygent::Service.get_url_with_telegram_kind(params[:telegram_kind])
+      base_url = Paygent::Service.get_url_with_telegram_kind(telegram_kind)
       log("Can't found related paygent URL with #{telegram_kind}") unless base_url
 
       url = "#{base_url}?#{params_str}"
