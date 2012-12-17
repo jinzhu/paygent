@@ -24,6 +24,7 @@ module Paygent
     @@url["091"] ||= "https://mdev.paygent.co.jp/n/ref/paynotice"
     ###キャリア継続課金差分照会URL###
     @@url["093"] ||= "https://mdev.paygent.co.jp/n/ref/runnotice"
+    @@url["094"] ||= "https://mdev.paygent.co.jp/n/ref/paymentref"
     ###携帯キャリア決済URL###
     @@url["10"] ||= "https://mdev.paygent.co.jp/n/c/request"
     ###携帯キャリア決済URL（継続課金用）###
