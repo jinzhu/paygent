@@ -16,6 +16,7 @@ module Paygent
   Paygent.debug_flg        = 0
   Paygent.timeout          = 2000
   Paygent.select_max_cnt   = 2000
+  Paygent.verbose          = true
 
   def self.init(option={})
     Paygent::Request.new(option)

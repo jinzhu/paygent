@@ -55,7 +55,7 @@ module Paygent
       c.cert            = Paygent.client_file_path
       c.certpassword    = Paygent.cert_password
       c.connect_timeout = Paygent.timeout
-      c.verbose         = true
+      c.verbose         = Paygent.verbose
       c.ssl_verify_host = false
       c.multipart_form_post = true
 
