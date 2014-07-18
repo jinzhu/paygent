@@ -1,7 +1,7 @@
 module Paygent
   class << self
     attr_accessor :client_file_path, :ca_file_path, :log_output_path, :debug_flg, :timeout, :select_max_cnt, :cert_password
-    attr_accessor :merchant_id, :default_id, :default_password, :telegram_version
+    attr_accessor :merchant_id, :default_id, :default_password, :telegram_version, :verbose
   end
 
   Paygent.merchant_id      = ""
